@@ -201,12 +201,12 @@ class profiles::base {
       source    => "puppet:///modules/crond/cron.allow"
     }
 
-          file { "/etc/at.allow":
-                  owner   => root,
-                  group   => root,
-                  mode    => 400,
-                  source    => "puppet:///modules/crond/at.allow"
-          }
+    file { "/etc/at.allow":
+            owner   => root,
+            group   => root,
+            mode    => 400,
+            source    => "puppet:///modules/crond/at.allow"
+    }
 
     file { "/etc/cron.deny":
       ensure    => absent,
@@ -255,11 +255,10 @@ class profiles::base {
       require   => File['/etc/ssh/sshd_config'],
     }
 
- }
+  }
 
  #sudoer configuration
  class sudoers_conf {
-
   file { '/etc/sudoers':
           path    => '/etc/sudoers',
           owner   => root,
@@ -289,33 +288,4 @@ class profiles::base {
   include profiles::base::issue
   include profiles::base::ssh_config
   include profiles::base::sudoers_conf
-
-  # SSH server and client
-  class { '::ssh::server':
-    options => {
-      'PermitRootLogin'          => 'yes',
-      'Protocol'                 => '2',
-      'SyslogFacility'           => 'AUTHPRIV',
-      'PasswordAuthentication'   => 'yes',
-      'GSSAPIAuthentication'     => 'yes',
-      'GSSAPICleanupCredentials' => 'yes',
-      'AcceptEnv'                => 'LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT LC_IDENTIFICATION LC_ALL LANGUAGE XMODIFIERS',
-      'Subsystem'                => '      sftp    /usr/libexec/openssh/sftp-server',
-      'Banner'                   => '/etc/issue.net',
-    },
-  }
-  class { '::ssh::client':
-    options => {
-      'Host *' => {
-        'SendEnv'                   => 'LANG LC_*',
-        'HashKnownHosts'            => 'yes',
-        'GSSAPIAuthentication'      => 'yes',
-        'GSSAPIDelegateCredentials' => 'no',
-      },
-    },
-  }
-
-  class { '::ntp':
-    servers => [ '0.pool.ntp.org', '2.centos.pool.ntp.org', '1.rhel.pool.ntp.org'],
-  }
 }
