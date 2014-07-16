@@ -25,7 +25,7 @@
 class profiles::base {
 
   #  Set up yum repos
-  class {
+  class set_repos {
 
     yumrepo { "RCS-Custom":
       baseurl   => "http://54.193.1.156/RCS-Custom/",
@@ -43,9 +43,9 @@ class profiles::base {
 
   }
 
-  #
+  #users
 
-  class {
+  class users {
 
     group { 'rcsbot':
             ensure          => present,
@@ -156,7 +156,7 @@ class profiles::base {
 
     file { '/home/rcsbot/.ssh/authorized_keys':
            # path            => "/home/rcsbot/.ssh/authorized_keys",
-ensure    => present,
+            ensure    => present,
             owner           => rcsbot,
             group           => rcsbot,
             mode            => 600,
@@ -193,7 +193,7 @@ ensure    => present,
 
 
   # crond
-  class {
+  class crond {
     file { "/etc/cron.allow":
       owner   => root,
       group   => root,
@@ -219,7 +219,7 @@ ensure    => present,
 
 
   # facts
-  class {
+  class facts {
     file { '/etc/facts':
       ensure    => directory,
       path    => '/etc/facts',
@@ -229,7 +229,7 @@ ensure    => present,
   }
 
   # issue
-  class {
+  class issue {
         file { '/etc/issue':
                 path    => "/etc/issue",
                 owner   => root,
@@ -240,7 +240,7 @@ ensure    => present,
   }
 
   #sshd
-  class {
+  class ssh_config {
     file { '/etc/ssh/sshd_config':
       path    => "/etc/ssh/sshd_config",
                   owner   => root,
@@ -282,6 +282,13 @@ ensure    => present,
 
   # exisitng
   include ::motd
+  include profiles::base::set_repos
+  include profiles::base::users
+  include profiles::base::crond
+  include profiles::base::facts
+  include profiles::base::issue
+  include profiles::base::ssh_config
+  include profiles::base::sudoers_conf
 
   # SSH server and client
   class { '::ssh::server':
