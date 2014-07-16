@@ -1,0 +1,16 @@
+{
+    "name": "Profiles",
+    "version": "0.1.0",
+    "author": "landuber.kassa@here.com",
+    "summary": "Profiles module for puppet profiles",
+    "license": "",
+    "source": "",
+    "project_page": "",
+    "issue_url": "",
+    "dependencies": [
+        {
+            "name": "puppetlabs-stdlib",
+            "version_range": ">= 1.0.0"
+        }
+    ]
+}
