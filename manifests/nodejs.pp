@@ -28,5 +28,6 @@ class profiles::nodejs {
     package { 'express':
         ensure   => present,
         provider => 'npm',
+        require => Class['nodejs']
     }
 }
