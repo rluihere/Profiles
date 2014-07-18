@@ -29,5 +29,5 @@ class profiles::base {
   include base::facts
   include base::issue
   include base::ssh_config
-  include base::sudoers_conf
+  #include base::sudoers_conf
 }
