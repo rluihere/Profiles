@@ -25,6 +25,6 @@
 class profiles::herelens {
     package { 'HERELens-0.0.1-0.1.noarch.rpm':
         ensure   => present,
-        require  => Yumrepo['RCS Custom']
+        require  => Yumrepo['RCS-Custom']
     }
 }
