@@ -23,8 +23,8 @@
 # Copyright 2014 HERE
 #
 class profiles::herelens {
-    package { 'herelens':
-        provider  => 'rpm',
+    package { 'HERELens':
+        provider  => 'yum',
         source    => 'HERELens-0.0.1-0.1.noarch.rpm',
         require   => Yumrepo['RCS-Custom']
     }
